@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class AlbumRepository implements AlbumRepositoryBase {
   @override
-  Future<List<AlbumModel>> fetchAlbums() async {
+  Future<List<AlbumModel>?> fetchAlbums() async {
 /*    // Mockolt adatok
     await Future.delayed(const Duration(seconds: 2));
     return [
@@ -13,16 +13,12 @@ class AlbumRepository implements AlbumRepositoryBase {
     ];*/
 
     // Valódi API hívás
-    try {
       final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/albums'));
       if (response.statusCode == 200) {
         List jsonResponse = json.decode(response.body);
         return jsonResponse.map((album) => AlbumModel.fromJson(album)).toList();
       } else {
-        throw 'Failed to load albums';
+        return null;
       }
-    } catch (e) {
-      throw '$e';
-    }
   }
 }

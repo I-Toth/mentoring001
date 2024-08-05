@@ -7,14 +7,15 @@ class AlbumProvider extends ChangeNotifier {
   List<AlbumModel>? _allAlbums;
 
   Future<void> fetchAlbums() async {
-    try {
-      final albums = await _repo.fetchAlbums();
+    final albums = await _repo.fetchAlbums();
+    if (albums != null) {
       _allAlbums = albums;
       albumsStreamHolder.addData(albums);
       searchStreamHolder.addData(albums);
-    } catch (e) {
-      albumsStreamHolder.addError(e);
-      searchStreamHolder.addError(e);
+    } else {
+      const error = 'Failed to load albums';
+      albumsStreamHolder.addError(error);
+      searchStreamHolder.addError(error);
     }
   }
 
@@ -22,9 +23,7 @@ class AlbumProvider extends ChangeNotifier {
     if (query.isEmpty) {
       searchStreamHolder.addData(_allAlbums);
     } else {
-      final filteredAlbums = _allAlbums
-          ?.where((album) => album.title.toLowerCase().contains(query.toLowerCase()))
-          .toList();
+      final filteredAlbums = _allAlbums?.where((album) => album.title.toLowerCase().contains(query.toLowerCase())).toList();
       searchStreamHolder.addData(filteredAlbums);
     }
   }
