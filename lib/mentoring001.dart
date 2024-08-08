@@ -10,3 +10,5 @@ export 'package:mentoring001/widgets/album_list.dart';
 export 'package:mentoring001/widgets/screens/album_screen.dart';
 export 'package:mentoring001/repositories/album_repository_impl.dart';
 export 'package:uigitdev_request_holder/uigitdev_request_holder.dart';
+export 'package:mentoring001/repositories/mock/fake_album_repository.dart';
+export 'package:flutter_test/flutter_test.dart';

@@ -2,10 +2,14 @@ import 'package:mentoring001/mentoring001.dart';
 
 ///Ez az osztály felelős az adatkezelésért
 class AlbumProvider extends ChangeNotifier {
-  final AlbumRepositoryBase _repo = AlbumRepository();
+  final AlbumRepositoryBase _repo;
   final albumsStreamHolder = StreamHolder<List<AlbumModel>?>(null);
   final searchStreamHolder = StreamHolder<List<AlbumModel>?>(null);
   List<AlbumModel>? _allAlbums;
+
+  ///Hozzáadtam egy opcionális [repo] paramétert az [AlbumProvider] konstruktorához, amely lehetővé teszi, hogy egy különböző [repository]-t adjunk át neki, például egy [fake repository]-t teszteléshez.
+  AlbumProvider({AlbumRepositoryBase? repo})
+      : _repo = repo ?? AlbumRepository();
 
   ///Ez az osztály tartalmazza a [fetchAlbums] függvényt, amely az [albumokat] tölti le az [API]-ról, és frissíti a [stream]-eket az új adatokkal vagy hibákkal.
   Future<void> fetchAlbums() async {
