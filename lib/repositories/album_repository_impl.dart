@@ -27,6 +27,8 @@ import 'request_album.dart';
 //   }
 // }
 
+///Ez az osztály a [fetchAlbums] függvényt valósítja meg, ami az [AlbumRepositoryRequest] osztály [send] függvényét hívja meg.
+///Ez a függvény végzi el a tényleges [API] hívást és visszaadja az eredményt.
 class AlbumRepository implements AlbumRepositoryBase {
   @override
   Future<List<AlbumModel>?> fetchAlbums() async {

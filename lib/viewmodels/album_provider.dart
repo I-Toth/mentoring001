@@ -1,11 +1,13 @@
 import 'package:mentoring001/mentoring001.dart';
 
+///Ez az osztály felelős az adatkezelésért
 class AlbumProvider extends ChangeNotifier {
   final AlbumRepositoryBase _repo = AlbumRepository();
   final albumsStreamHolder = StreamHolder<List<AlbumModel>?>(null);
   final searchStreamHolder = StreamHolder<List<AlbumModel>?>(null);
   List<AlbumModel>? _allAlbums;
 
+  ///Ez az osztály tartalmazza a [fetchAlbums] függvényt, amely az [albumokat] tölti le az [API]-ról, és frissíti a [stream]-eket az új adatokkal vagy hibákkal.
   Future<void> fetchAlbums() async {
     final albums = await _repo.fetchAlbums();
     if (albums != null) {
@@ -19,6 +21,7 @@ class AlbumProvider extends ChangeNotifier {
     }
   }
 
+  ///A [searchAlbums] függvény pedig a keresési funkcióért felelős, amely szűri az [albumokat] a megadott keresési kifejezés alapján.
   void searchAlbums(String query) {
     if (query.isEmpty) {
       searchStreamHolder.addData(_allAlbums);
